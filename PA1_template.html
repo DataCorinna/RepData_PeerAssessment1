@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Reproducible Research: Programming Assignment 1</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Reproducible Research: Programming Assignment 1</h1>
+
+<p>This is a submit to the first programming assigment MOOC <strong>&#39;Reproducible Research&#39;</strong>
+from August 2014, offered by Coursera in Cooperation with the John Hopkins
+Bloomberg School of Public Health.</p>
+
+<p>The objective of the assignemnt is to analyze a dataset collected by one anonymous person using a personal activity monitoring device like &#39;Nike Fuelband&#39; or similar. The dataset is comprised of measurements of three variables. Each measurement represents a five minute time intervall during the months of October and November 2012. The <strong>three variables</strong> are: <strong>&#39;STEPS&#39;</strong> (number of steps the person has taken in the measured five minute intervall), <strong>&#39;DATE&#39;</strong> (date that that the measurement was done) and RVALL&#39;* (identifier for the five minute intervall of a measurement)</p>
+
+<p>The dataset was provided by the staff of the John Hopkins Bloomberg School for Public Health and was contained in a file named <strong>&#39;repdata_data_activity.zip&#39;</strong> which includes a single file named <strong>&#39;activity.csv&#39;</strong>. The zip-file is contained in the github-repository <strong>&#39;<a href="http://github.com/rdpeng/RepData_PeerAssessment1">http://github.com/rdpeng/RepData_PeerAssessment1</a>&#39;</strong> that the course instructors created for the purpose of this programming assignment.</p>
+
+<p>The following reproducible analysis will be conducted according to the instructions for the programming assignment, as stated on the Coursera website in the data for the &#39;Reproducible Research&#39; course. It will contain the following <strong>7 steps</strong>, all of which will be addresses in this Markdown-file:</p>
+
+<p><em>Note: Running the analysis file requires having the &#39;knitr&#39;- and &#39;ggplot2&#39;-packages installed.</em></p>
+
+<ol>
+<li><p>Forking the github repository &#39;<a href="http://github.com/rdpeng/RepData_PeerAssessment1">http://github.com/rdpeng/RepData_PeerAssessment1</a>&#39; and cloning it to a local copy</p></li>
+<li><p>Loading and pre-processing the dataset from the .csv-file</p></li>
+<li><p>Calculating the mean total number of steps taken per day and plotting a histogram of the calculated results</p></li>
+<li><p>Analysing and plotting the average daily activitiy pattern and identifying the five minute intervall that, on average of all days in the dataset, contains the maximum number of steps.</p></li>
+<li><p>Imputing missing values (which are labeled &#39;NA&#39;) and redo step 5, including the imputed data. This step includes four sub-steps which will be explained later in this file.</p></li>
+<li><p>Analyzing, if there are any differences in activity patterns between weekdays and weekends.</p></li>
+<li><p>Commiting the finished Markdown-file first to your local repository, then to your forked online-repository at &#39;github.com&#39; and submit a link to the forked online-repository as well as the SHA-1 hash for this repository to the course page on the coursera website.</p></li>
+</ol>
+
+<h2>Step 1: Forking the github repository &#39;<a href="http://github.com/rdpeng/RepData_PeerAssessment1">http://github.com/rdpeng/RepData_PeerAssessment1</a>&#39; and cloning it to a local copy:</h2>
+
+<p>This is neither an R nor a Markdown task, so the specifics on <em>HOW</em> to do this will not be presented here (the instructions to the assignment also do not require a description)</p>
+
+<p>Please note, that I assume that you UNZIP the zipped date file in your local repository before you run this analysis Markdown file.</p>
+
+<h2>Step 2: Loading and pre-processing the dataset from the .csv-file:</h2>
+
+<p>Load the data file in a dataframe called &#39;data&#39;:</p>
+
+<pre><code class="r">data&lt;-read.csv(&quot;activity.csv&quot;)
+</code></pre>
+
+<p>Take a look at the data:</p>
+
+<pre><code class="r">str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+</code></pre>
+
+<p>As I am working on a computer whose system language is not english, I have to tell knitr to use english, by using the following code (I also add a &#39;weekday&#39; columnn to the data, which will be needed later on):</p>
+
+<pre><code class="r">Sys.setlocale(&quot;LC_TIME&quot;, &quot;English&quot;) 
+</code></pre>
+
+<pre><code>## [1] &quot;English_United States.1252&quot;
+</code></pre>
+
+<pre><code class="r">date = strptime(as.character(data[,2]), &quot;%Y-%m-%d&quot;) 
+wday = weekdays(date) 
+steps = data[,1] 
+interval = data[,3] 
+data = data.frame(date, wday, steps, interval)
+</code></pre>
+
+<p>Let&#39;s have another look:</p>
+
+<pre><code class="r">str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    17568 obs. of  4 variables:
+##  $ date    : POSIXct, format: &quot;2012-10-01&quot; &quot;2012-10-01&quot; ...
+##  $ wday    : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+</code></pre>
+
+<h2>Step 3: Calculating the mean total number of steps taken per day and plotting a histogram of the calculated results:</h2>
+
+<p>Calculate the sum of taken steps for each day in the observed time period of two months:</p>
+
+<pre><code class="r">histogram_data&lt;-as.data.frame(tapply(data$steps,data$date,sum))
+names(histogram_data)&lt;-&quot;steps_taken&quot;
+histogram_data
+</code></pre>
+
+<pre><code>##            steps_taken
+## 2012-10-01          NA
+## 2012-10-02         126
+## 2012-10-03       11352
+## 2012-10-04       12116
+## 2012-10-05       13294
+## 2012-10-06       15420
+## 2012-10-07       11015
+## 2012-10-08          NA
+## 2012-10-09       12811
+## 2012-10-10        9900
+## 2012-10-11       10304
+## 2012-10-12       17382
+## 2012-10-13       12426
+## 2012-10-14       15098
+## 2012-10-15       10139
+## 2012-10-16       15084
+## 2012-10-17       13452
+## 2012-10-18       10056
+## 2012-10-19       11829
+## 2012-10-20       10395
+## 2012-10-21        8821
+## 2012-10-22       13460
+## 2012-10-23        8918
+## 2012-10-24        8355
+## 2012-10-25        2492
+## 2012-10-26        6778
+## 2012-10-27       10119
+## 2012-10-28       11458
+## 2012-10-29        5018
+## 2012-10-30        9819
+## 2012-10-31       15414
+## 2012-11-01          NA
+## 2012-11-02       10600
+## 2012-11-03       10571
+## 2012-11-04          NA
+## 2012-11-05       10439
+## 2012-11-06        8334
+## 2012-11-07       12883
+## 2012-11-08        3219
+## 2012-11-09          NA
+## 2012-11-10          NA
+## 2012-11-11       12608
+## 2012-11-12       10765
+## 2012-11-13        7336
+## 2012-11-14          NA
+## 2012-11-15          41
+## 2012-11-16        5441
+## 2012-11-17       14339
+## 2012-11-18       15110
+## 2012-11-19        8841
+## 2012-11-20        4472
+## 2012-11-21       12787
+## 2012-11-22       20427
+## 2012-11-23       21194
+## 2012-11-24       14478
+## 2012-11-25       11834
+## 2012-11-26       11162
+## 2012-11-27       13646
+## 2012-11-28       10183
+## 2012-11-29        7047
+## 2012-11-30          NA
+</code></pre>
+
+<p>And plot a histogram of the total number of steps taken per day:</p>
+
+<pre><code class="r">plot&lt;-ggplot(histogram_data, aes(x=steps_taken))
+plot&lt;- plot + geom_histogram(binwidth=500) + labs(y=&quot;number of days&quot;) + labs(x=&quot;steps taken per day&quot;)
+print(plot)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plot histogram of steps per day"/> </p>
+
+<p>Now calculate the mean of total steps taken per day:</p>
+
+<pre><code class="r">mean(histogram_data[,1], na.rm=TRUE)
+</code></pre>
+
+<pre><code>## [1] 10766
+</code></pre>
+
+<p>And the median of total steps taken per day:</p>
+
+<pre><code class="r">median(histogram_data[,1], na.rm=TRUE)
+</code></pre>
+
+<pre><code>## [1] 10765
+</code></pre>
+
+<h2>Step 4: Analysing and plotting the average daily activitiy pattern and identifying the five minute intervall that, on average of all days in the dataset, contains the maximum number of steps:</h2>
+
+<p>First, calculate the average number of steps taken (averaged across all days) to create the daily activity pattern:</p>
+
+<pre><code class="r">ActivityPattern&lt;-aggregate(steps ~ interval, data, mean)
+ActivityPattern
+</code></pre>
+
+<pre><code>##     interval     steps
+## 1          0   1.71698
+## 2          5   0.33962
+## 3         10   0.13208
+## 4         15   0.15094
+## 5         20   0.07547
+## 6         25   2.09434
+## 7         30   0.52830
+## 8         35   0.86792
+## 9         40   0.00000
+## 10        45   1.47170
+## 11        50   0.30189
+## 12        55   0.13208
+## 13       100   0.32075
+## 14       105   0.67925
+## 15       110   0.15094
+## 16       115   0.33962
+## 17       120   0.00000
+## 18       125   1.11321
+## 19       130   1.83019
+## 20       135   0.16981
+## 21       140   0.16981
+## 22       145   0.37736
+## 23       150   0.26415
+## 24       155   0.00000
+## 25       200   0.00000
+## 26       205   0.00000
+## 27       210   1.13208
+## 28       215   0.00000
+## 29       220   0.00000
+## 30       225   0.13208
+## 31       230   0.00000
+## 32       235   0.22642
+## 33       240   0.00000
+## 34       245   0.00000
+## 35       250   1.54717
+## 36       255   0.94340
+## 37       300   0.00000
+## 38       305   0.00000
+## 39       310   0.00000
+## 40       315   0.00000
+## 41       320   0.20755
+## 42       325   0.62264
+## 43       330   1.62264
+## 44       335   0.58491
+## 45       340   0.49057
+## 46       345   0.07547
+## 47       350   0.00000
+## 48       355   0.00000
+## 49       400   1.18868
+## 50       405   0.94340
+## 51       410   2.56604
+## 52       415   0.00000
+## 53       420   0.33962
+## 54       425   0.35849
+## 55       430   4.11321
+## 56       435   0.66038
+## 57       440   3.49057
+## 58       445   0.83019
+## 59       450   3.11321
+## 60       455   1.11321
+## 61       500   0.00000
+## 62       505   1.56604
+## 63       510   3.00000
+## 64       515   2.24528
+## 65       520   3.32075
+## 66       525   2.96226
+## 67       530   2.09434
+## 68       535   6.05660
+## 69       540  16.01887
+## 70       545  18.33962
+## 71       550  39.45283
+## 72       555  44.49057
+## 73       600  31.49057
+## 74       605  49.26415
+## 75       610  53.77358
+## 76       615  63.45283
+## 77       620  49.96226
+## 78       625  47.07547
+## 79       630  52.15094
+## 80       635  39.33962
+## 81       640  44.01887
+## 82       645  44.16981
+## 83       650  37.35849
+## 84       655  49.03774
+## 85       700  43.81132
+## 86       705  44.37736
+## 87       710  50.50943
+## 88       715  54.50943
+## 89       720  49.92453
+## 90       725  50.98113
+## 91       730  55.67925
+## 92       735  44.32075
+## 93       740  52.26415
+## 94       745  69.54717
+## 95       750  57.84906
+## 96       755  56.15094
+## 97       800  73.37736
+## 98       805  68.20755
+## 99       810 129.43396
+## 100      815 157.52830
+## 101      820 171.15094
+## 102      825 155.39623
+## 103      830 177.30189
+## 104      835 206.16981
+## 105      840 195.92453
+## 106      845 179.56604
+## 107      850 183.39623
+## 108      855 167.01887
+## 109      900 143.45283
+## 110      905 124.03774
+## 111      910 109.11321
+## 112      915 108.11321
+## 113      920 103.71698
+## 114      925  95.96226
+## 115      930  66.20755
+## 116      935  45.22642
+## 117      940  24.79245
+## 118      945  38.75472
+## 119      950  34.98113
+## 120      955  21.05660
+## 121     1000  40.56604
+## 122     1005  26.98113
+## 123     1010  42.41509
+## 124     1015  52.66038
+## 125     1020  38.92453
+## 126     1025  50.79245
+## 127     1030  44.28302
+## 128     1035  37.41509
+## 129     1040  34.69811
+## 130     1045  28.33962
+## 131     1050  25.09434
+## 132     1055  31.94340
+## 133     1100  31.35849
+## 134     1105  29.67925
+## 135     1110  21.32075
+## 136     1115  25.54717
+## 137     1120  28.37736
+## 138     1125  26.47170
+## 139     1130  33.43396
+## 140     1135  49.98113
+## 141     1140  42.03774
+## 142     1145  44.60377
+## 143     1150  46.03774
+## 144     1155  59.18868
+## 145     1200  63.86792
+## 146     1205  87.69811
+## 147     1210  94.84906
+## 148     1215  92.77358
+## 149     1220  63.39623
+## 150     1225  50.16981
+## 151     1230  54.47170
+## 152     1235  32.41509
+## 153     1240  26.52830
+## 154     1245  37.73585
+## 155     1250  45.05660
+## 156     1255  67.28302
+## 157     1300  42.33962
+## 158     1305  39.88679
+## 159     1310  43.26415
+## 160     1315  40.98113
+## 161     1320  46.24528
+## 162     1325  56.43396
+## 163     1330  42.75472
+## 164     1335  25.13208
+## 165     1340  39.96226
+## 166     1345  53.54717
+## 167     1350  47.32075
+## 168     1355  60.81132
+## 169     1400  55.75472
+## 170     1405  51.96226
+## 171     1410  43.58491
+## 172     1415  48.69811
+## 173     1420  35.47170
+## 174     1425  37.54717
+## 175     1430  41.84906
+## 176     1435  27.50943
+## 177     1440  17.11321
+## 178     1445  26.07547
+## 179     1450  43.62264
+## 180     1455  43.77358
+## 181     1500  30.01887
+## 182     1505  36.07547
+## 183     1510  35.49057
+## 184     1515  38.84906
+## 185     1520  45.96226
+## 186     1525  47.75472
+## 187     1530  48.13208
+## 188     1535  65.32075
+## 189     1540  82.90566
+## 190     1545  98.66038
+## 191     1550 102.11321
+## 192     1555  83.96226
+## 193     1600  62.13208
+## 194     1605  64.13208
+## 195     1610  74.54717
+## 196     1615  63.16981
+## 197     1620  56.90566
+## 198     1625  59.77358
+## 199     1630  43.86792
+## 200     1635  38.56604
+## 201     1640  44.66038
+## 202     1645  45.45283
+## 203     1650  46.20755
+## 204     1655  43.67925
+## 205     1700  46.62264
+## 206     1705  56.30189
+## 207     1710  50.71698
+## 208     1715  61.22642
+## 209     1720  72.71698
+## 210     1725  78.94340
+## 211     1730  68.94340
+## 212     1735  59.66038
+## 213     1740  75.09434
+## 214     1745  56.50943
+## 215     1750  34.77358
+## 216     1755  37.45283
+## 217     1800  40.67925
+## 218     1805  58.01887
+## 219     1810  74.69811
+## 220     1815  85.32075
+## 221     1820  59.26415
+## 222     1825  67.77358
+## 223     1830  77.69811
+## 224     1835  74.24528
+## 225     1840  85.33962
+## 226     1845  99.45283
+## 227     1850  86.58491
+## 228     1855  85.60377
+## 229     1900  84.86792
+## 230     1905  77.83019
+## 231     1910  58.03774
+## 232     1915  53.35849
+## 233     1920  36.32075
+## 234     1925  20.71698
+## 235     1930  27.39623
+## 236     1935  40.01887
+## 237     1940  30.20755
+## 238     1945  25.54717
+## 239     1950  45.66038
+## 240     1955  33.52830
+## 241     2000  19.62264
+## 242     2005  19.01887
+## 243     2010  19.33962
+## 244     2015  33.33962
+## 245     2020  26.81132
+## 246     2025  21.16981
+## 247     2030  27.30189
+## 248     2035  21.33962
+## 249     2040  19.54717
+## 250     2045  21.32075
+## 251     2050  32.30189
+## 252     2055  20.15094
+## 253     2100  15.94340
+## 254     2105  17.22642
+## 255     2110  23.45283
+## 256     2115  19.24528
+## 257     2120  12.45283
+## 258     2125   8.01887
+## 259     2130  14.66038
+## 260     2135  16.30189
+## 261     2140   8.67925
+## 262     2145   7.79245
+## 263     2150   8.13208
+## 264     2155   2.62264
+## 265     2200   1.45283
+## 266     2205   3.67925
+## 267     2210   4.81132
+## 268     2215   8.50943
+## 269     2220   7.07547
+## 270     2225   8.69811
+## 271     2230   9.75472
+## 272     2235   2.20755
+## 273     2240   0.32075
+## 274     2245   0.11321
+## 275     2250   1.60377
+## 276     2255   4.60377
+## 277     2300   3.30189
+## 278     2305   2.84906
+## 279     2310   0.00000
+## 280     2315   0.83019
+## 281     2320   0.96226
+## 282     2325   1.58491
+## 283     2330   2.60377
+## 284     2335   4.69811
+## 285     2340   3.30189
+## 286     2345   0.64151
+## 287     2350   0.22642
+## 288     2355   1.07547
+</code></pre>
+
+<p>Now create the plot:</p>
+
+<pre><code class="r">plotActivityPattern&lt;-ggplot(ActivityPattern,aes(interval,steps)) + geom_line() + ylab(&quot;average steps&quot;) + xlab(&quot;interval&quot;)
+print(plotActivityPattern)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAEgCAMAAABvm5EPAAAAsVBMVEUAAAAAADoAAGYAOmYAOpAAZrY6AAA6ADo6AGY6OmY6OpA6kNtmAABmADpmAGZmOgBmtv9/f39/f5V/f6t/lcF/q9aQOgCQOjqQZgCQtpCQ2/+Vf3+Vweurf6urlZWr1v+2ZgC2/7a2///BlX/BlZXBlavBwdbB6//Wq3/W///bkDrb25Db/7bb/9vb///l5eXrwZXr///y8vL/tmb/1qv/25D//7b//9b//9v//+v///+Ir/6kAAAACXBIWXMAAAsSAAALEgHS3X78AAAOeklEQVR4nO2dC2PbthWFb7o06xInjdak3VyvzpKudbzOTh3Zifn/f9j4FAESuHgQonCJc+LIMiV9utZn8AkSVCFFhk5dAHKaQHyhgfhCA/GFBuILDcQXGogvNBBfaCC+0EB8oYH4QgPxhQbiC024+FtDjBONufN+JqBpoRBfKBTiC4VCfKFQiC8UCvGFQiG+UCjEFwqF+EKhEF8oFOILhRYgno4B5SICCvFxUC4ioBAfB+UiAgrxcVAuIqC+4h8/7HZv/qyudn//vepvIV4y1Ff8/m3t+3L/5s/DF8SLhvqKb/Lp8tNF9eVfH7vbesKuDveCPELoVuQO9xnVjf7TZfX4n4/dbT91jb/OZVBimnxela4J9Rd/Vc/sJy0e4uVCfcU/frhsGr3IZTzEm3ie4q+a5fmFzLV6iDfxvGf1lqxR5DIoxBt5EB8F5SICCvFxUC4ioBAfB+UiArp98cTtusuq0lWhEB8FZSMCCvFRUDYioBAfBWUjAlqCeMZ8VpWuCoX4KCgbEVCIj4KyEQGF+CgoGxFQiI+CshEBhfgoKBsRUIiPgrIRAYX4KCgbEVCIj4KyEQGF+CgoGxFQiI+CshEBhfgoKBsRUIiPgrIRAV0s/s4Q48SliYVS/z8plI0IaBEt3t7ks6p0VSjER0HZiIBCfBSUjQjo1sUTxFt4EB8OdUQEFOIjoI6IgEJ8BNQREVCIj4A6IgK6efGtc4if84oQbzWfUaUrQzcuniDexoP4YKgrIqBbFz8ot5jPp9K1oRAfDnVFBBTiw6GuiICWIt5iPp9K14ZCfDjUFRFQiA+HuiICWox4s/l8Kl0bCvHhUFdEQDcv3nR3IdQVEdByxBvN51Pp2lCID4e6IgLqL769RP3VrrlwtZyrV0O8lecrfr/74WP1+GsjXND16jXZBvP5VLo21Ff842/NaCRffvl597YSNCYNWX9AtDCfTSN+X7f6T5eCxqRBi7fygsQ32V8IGpNGdz03n0+la0MDW/xFMwiZ1GU8xKu8sBZ/1QxMI3StHuI1nrd4S9YoMh46UT0zn0+la0MhPhzqiggoxIdDXREBhfhwqCsioBAfDnVFBBTiw6GuiIDy4q+f3lwTvYb4wsQ/vDyvv+6/ew/xhYl/9b5u8xA/gboiAsqKr67pyflnzOonUFdEQHnxHlmjyHgoxFt5EB8MdUUElBf/9Uci+nY74mc/51Pp2lBW/NcfX9S316z5NYqMh0K8lceJr9fqD7cQ7x0RUFZ819jR4idQV0RA+RZ/Rl2+sbf5NYqMh0K8lce2eI+sUWQ8FOKtPIgPhroiAsqLrzfnnv7x8hziCxNfb87dP7/5/PSGEb/GMBrx0OmYJNOf86l0bSgrvt6Qq8Vjc24CdUUE1KPFX7Mtfo0i46EQb+Vx4rtdtqx3iJ9HBJQX75E1ioyHQryVx4nHLlsj1BURUEb8Yb8dlvG3RYl3tXWIt0QElBXvkzWKjIdCvJXHit9a92qIH3mc+M11r55NyKfStaG8+K11r4b4kceJ31z3aogfeax4j6xRZDwU4q08iA+GuiICCvHhUFdEQCE+HOqKCCjEh0NdEQHlxW+u6xXEH3iceJ+uV2sUGQ+FeCuPE7+9rlcQf+C5W/yWul5Np+RT6dpQVvz2ul5B/IHHivfIGkXGQyHeyvMW3w9N0ly+WOpFjOdTjlqpbezyRVB3UqzcnY3nTLZDk3QXLBd72fL5FIg3t/h33YUR6g26bmiSbogCqUOTWKYc7b0lDYVi7mX77+Z7K74dlETq0CSGSceslMJbPPOKtTfnqqb/1X+f3/Ti9RafvXjTBwnxHY8TX8/rm4sfPZw1XTHaoUmELeMh3s7jxSvphyYRtVYP8Xaet3hL1igyGppEPE2gzmxA/LXrCjgQb4h88Q8vzz9/K/mqVxBv57HiX73vviA+Rrx7D85MvP0V627O/XRefwnuV59CPBUovqqdfyZ6wXiH+Hk2IN4jaxQZDYV4O48TL/40aYi38zjx9QIe4ksU3x+WLXs7vkTxPlmjyGioIPHUv4Qs8iE+BCpPfPeOBvurd7YUfUKFTPH6PR3qEZxQAfFMWPHiT6g4sXin+VzFiz+hwvjBqxOzFX/0yzSx4sWfUCFMvPr004r3iBGauMho6KnFc+bpFuL9Ko2AyhJP2Yh/OONn82WI714QJ54xn7P4qrp/JnqI0QTihyV1avGUt/gmn9l99WuMnxINnQ5BM5vohpKFwqRS3odshdAETN0kY5UKNFnQ4h2JbvGkvtu8kKZ5U64tXvoy3ny8IxPxzb87/WdblSPUJ1irlyWechIvu1+95QjnuuJt63hZixfer95ylATiWx4rXma/+nEmm4t4w6wna/FC+9XnJX62vj5MzVi80H71tvUp7WFf6EG864DLFMqLbyfmK94jRmjiIgOhmYlvmrZT/Ow5EB8O9dhJ7g8dxXubh/hURQZCId4josVbVJD9oemrXJXSgbVAvGm7slvXv7M/BeIZ6LHFk7K2cOfRd1KDQvzyIm1Qu3jOkbd4bRfMEvGGeiDeO97iKY34cdZuEW99D4hPVaQNahXPtk0/8TS5axBvW+obxM9W7yDeO6cXP3VpK8BX/K0mnqmSr3SagsXzC+OE4s0HfiE+VZE2qEW8YydbAvHKngKD+spQ23QrHeK9YxJvMKwf+jAlWPy4fait55PhmSN0OjVU/HQKxCuZiScf8epH6imeIB7ih+9keuYIhfgERdqgBvEUKt6+E0h/H1Ina+LNi+ONib/aNReuzuXq1bMNt/ZSEgLEk3utPi/xj782wnO5Xj3NdntEiTeqZ8VThPjJ2qIw8V9++Xn3tsplTBpq/2lT5pOMr5tAjGQdO0yg4WflGcY3nE2k+X0Wse6INo532//QjEuTy5g01O+r0dseJWjxhrMblJl897DyrqbG6Wjx3bc704PmSadfudtf5DImDQ0z3cMn3/0Z5CDe2PViel+O+P1FVbf4fJbxh6WtsgQOF29avjrFq6+aO+JFkjjxzVr9RTZj0pD6/zDPP674/g31J3iK77fhlOO9bvGHB04/q5/ECE1cpA7V95yMzZ3ixJvm9Ya+zonE62Ca3Zk+BvGKeNWBeg1QOq34w2us4s3H6CYl6Q9CPCM+FOojfvYS0u4axQ/T7OKtlUA8U2n/fbqilYd40sSbPUJ8aJEa1LRpFQbV1sdN4tm1PaKZ+OGPoZ9oEc+suRv7c0C8DlVW37vbxeJnBH41n26jxDMrcManT2YsEJ9CvNLSwsUbfqaBQl2lIeKtHcVo+Lu87aC+2bL48UO+NXygYeINhBXFM/0DIV6HDg09gfhhsyyd+PbGeqx3juWeCPE6dCY+GHoE8WM99W3lfZod+zyI16GKtEjoTPwUFSV+3NRIKH58H4hfLl45GVI9LVJ5fP4KXvzIbB6qfL3zlUK8DmW3ff2go+4qUrxhFw/ZnsrEIV7dNey/4gDx1hjEawM/GcRPe3fMnqIcc0sqfninQbwbvnXxi2f17Qq4ujPgMOwXxGctPh46Ez898GN4hb/4tLP6AQfxqcR3+1qm4i3biUHiE/36M/GWP8og6CEQP4FadqadUHxfKcQvh47LzpzFK32KbscDyBC/ADpuJhnEmzfHTil+WBsx9eEJhg4pXfwMavtkTym+3/DUN+wjoUMWizeOd5J4/BQNGjpCjCHU/lOh2oNxzPF1qX79EVnfqeiOlMIXp8gWP7ZP05mYcdBjtHj1bkV97wHnfgzM6pmIFH8L8Yuh4x5w60Oh0KOKvyWIP7b4WOj64mP/RNsUKn4KdecE4nW8elRBnRIJhXjPnFp8NRMO8Qmg7pxcvPpWNN7GQsWJ9zj0tXnxt4bzL0OhEO+Z3KCWnuHeUIj3TI5Q8657iPeHeiRHKMQvhXokRyjEL4V6JEeo+WDdNsX79GfL0dFRoKYTPiE+AOqTHKEG8QTxAVCfZAmdiSeID4H6JEvoZDdOt20P8d5Qn2QLhfh4qE+yhZJ2D+JDoD7JFqqLv3Vf5q/nZS1e1VxNJ8RC1WxA/KRLDjXDHzMX2j3wMhc//gqVfkZrPFTNNsU334YzQG39saPE+1zEeP52pgK433zoVjpAzbsrAqGTbEK8do6v48JsIy9CvPOy5dSvYGpvOb88bF/0ZCE1TKXh1JH+GYmuM6FnC+KbjJ+jLt7eWGLEu4cmoW6MEC2V/nM1TFWmVzROPEAOz/ApDVEVDh9v2KvsyWVoEkAXQKPEZzI0CaALoDHicxmaBNAF0BjxuQxNAugCaJR4NWsUCSjEA5oICvGFQiG+UCjEFwqF+EKhi8WbcpQhpgE9ZiC+KOgYiC8KOgbii4KOwbHPQgPxhQbiCw3EFxqILzQpxKtH65PgGl4HTYRu+w+pxBTcHpqy2McPu92bP5NXakoC8Vr/nOV5/PX3AzQRer/74aNGTMFtoYmL3b+tTV+mrtSYBOK1HnnL8+WXn3dve2ga9ONvTVdRlZiA20HTF1t9ukxcqTkpxKt9cJdnXzek+pdvoanQrXiFmITbENIXWzf65JWakl+Lb7K/SPv3foQWXx2EJC326m2VvlJT8lvG7y+amUjaJVzbOFMvOVto2mIfP1xWVfpKTclzrf4i8Tpt2zhTryv30JTFXjWnKl1IWatHJAbiCw3EFxqILzQQX2jKFX//3fvZPftzNpdyxY+B+KJSS71//g+i1w9n9M379qa6/9v39PSm+vrT+f2z+hGI32Ia8c9eVJ+f3jR6372orr+t7p+9rqVX98//eHnePgHit5fea/ftoRb98KqdcP2i+arT/7zRQHwn/oyInpy3E57/r2701Tuq5/0Qv8Ho4l+976fVC/h/Pr95OHuNWf1Go4lvlvH90r66phftX8D9X88hfoMZxX/9sV2rf3LercXXwhv79JfvX0M8srVAfKGB+EID8YUG4gsNxBcaiC80EF9oIL7QQHyh+T/DuOQwpgqABwAAAABJRU5ErkJggg==" alt="plot of chunk plot activity pattern"/> </p>
+
+<p>And find out, which interval has the highest average number of steps taken:</p>
+
+<pre><code class="r">ActivityPattern$interval[which.max(ActivityPattern$steps)]
+</code></pre>
+
+<pre><code>## [1] 835
+</code></pre>
+
+<p>And show the average number of steps for this intervall:</p>
+
+<pre><code class="r">max(ActivityPattern$steps)
+</code></pre>
+
+<pre><code>## [1] 206.2
+</code></pre>
+
+<h2>Step 5: Imputing missing values (which are labeled &#39;NA&#39;) and redo step 3, including the imputed data.</h2>
+
+<p>Let&#39;s see, how many values of the &#39;steps&#39; variable are missing in the dataset:</p>
+
+<pre><code class="r">missings = is.na(steps) 
+sum(missings) 
+</code></pre>
+
+<pre><code>## [1] 2304
+</code></pre>
+
+<p>Now create a clone of the original dataset and impute the missing values with the mean value for the corresponding interval:</p>
+
+<pre><code class="r">dataClone &lt;- data
+fn &lt;- function(steps,interval) ifelse(is.na(steps),ActivityPattern$steps[ActivityPattern$interval==interval],steps) 
+dataClone$steps &lt;- apply( data[,c(&#39;steps&#39;,&#39;interval&#39;)] ,1, function(y) fn(y[&#39;steps&#39;],y[&#39;interval&#39;]) ) 
+</code></pre>
+
+<p>Now, with the cloned and imputed dataset, calculate again the sum of taken steps for each day in the observed time period of two months:</p>
+
+<pre><code class="r">histogram_data&lt;-as.data.frame(tapply(dataClone$steps,dataClone$date,sum))
+names(histogram_data)&lt;-&quot;steps_taken&quot;
+histogram_data
+</code></pre>
+
+<pre><code>##            steps_taken
+## 2012-10-01       10766
+## 2012-10-02         126
+## 2012-10-03       11352
+## 2012-10-04       12116
+## 2012-10-05       13294
+## 2012-10-06       15420
+## 2012-10-07       11015
+## 2012-10-08       10766
+## 2012-10-09       12811
+## 2012-10-10        9900
+## 2012-10-11       10304
+## 2012-10-12       17382
+## 2012-10-13       12426
+## 2012-10-14       15098
+## 2012-10-15       10139
+## 2012-10-16       15084
+## 2012-10-17       13452
+## 2012-10-18       10056
+## 2012-10-19       11829
+## 2012-10-20       10395
+## 2012-10-21        8821
+## 2012-10-22       13460
+## 2012-10-23        8918
+## 2012-10-24        8355
+## 2012-10-25        2492
+## 2012-10-26        6778
+## 2012-10-27       10119
+## 2012-10-28       11458
+## 2012-10-29        5018
+## 2012-10-30        9819
+## 2012-10-31       15414
+## 2012-11-01       10766
+## 2012-11-02       10600
+## 2012-11-03       10571
+## 2012-11-04       10766
+## 2012-11-05       10439
+## 2012-11-06        8334
+## 2012-11-07       12883
+## 2012-11-08        3219
+## 2012-11-09       10766
+## 2012-11-10       10766
+## 2012-11-11       12608
+## 2012-11-12       10765
+## 2012-11-13        7336
+## 2012-11-14       10766
+## 2012-11-15          41
+## 2012-11-16        5441
+## 2012-11-17       14339
+## 2012-11-18       15110
+## 2012-11-19        8841
+## 2012-11-20        4472
+## 2012-11-21       12787
+## 2012-11-22       20427
+## 2012-11-23       21194
+## 2012-11-24       14478
+## 2012-11-25       11834
+## 2012-11-26       11162
+## 2012-11-27       13646
+## 2012-11-28       10183
+## 2012-11-29        7047
+## 2012-11-30       10766
+</code></pre>
+
+<p>And plot a histogram of the total number of steps taken per day:</p>
+
+<pre><code class="r">plot&lt;-ggplot(histogram_data, aes(x=steps_taken))
+plot&lt;- plot + geom_histogram(binwidth=500) + labs(y=&quot;number of days&quot;) + labs(x=&quot;steps taken per day&quot;)
+print(plot)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk plot histogram of steps per day for clone"/> </p>
+
+<p>Now calculate the mean of total steps taken per day:</p>
+
+<pre><code class="r">mean(histogram_data[,1], na.rm=TRUE)
+</code></pre>
+
+<pre><code>## [1] 10766
+</code></pre>
+
+<p>And the median of total steps taken per day:</p>
+
+<pre><code class="r">median(histogram_data[,1], na.rm=TRUE)
+</code></pre>
+
+<pre><code>## [1] 10766
+</code></pre>
+
+<h2>Step 6: Analyzing, if there are any differences in activity patterns between weekdays and weekends.</h2>
+
+<p>First, add a new factor variable to the cloned and imputed dataset, to differentiate between weekdays and weekends:</p>
+
+<pre><code class="r">FUN &lt;- function(d) ifelse(is.na(match(weekdays(d),c(&quot;Saturday&quot;,&quot;Sunday&quot;))),&quot;weekday&quot;,&quot;weekend&quot;)
+dataClone$weekendYN &lt;- factor(apply(dataClone[c(&#39;date&#39;)],1,function(y) FUN(as.Date(y[&#39;date&#39;]))))
+str(dataClone)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    17568 obs. of  5 variables:
+##  $ date     : POSIXct, format: &quot;2012-10-01&quot; &quot;2012-10-01&quot; ...
+##  $ wday     : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ steps    : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
+##  $ interval : int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ weekendYN: Factor w/ 2 levels &quot;weekday&quot;,&quot;weekend&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+</code></pre>
+
+<p>Then create a plot to see, if the average activity patterns for a timeline of intervals differ between weekdays and weekends:</p>
+
+<pre><code class="r">ActivityPatternClone&lt;-aggregate(dataClone$steps, list(dataClone$interval,dataClone$weekendYN), mean)
+ActivityPatternClone
+</code></pre>
+
+<pre><code>##     Group.1 Group.2         x
+## 1         0 weekday 2.251e+00
+## 2         5 weekday 4.453e-01
+## 3        10 weekday 1.732e-01
+## 4        15 weekday 1.979e-01
+## 5        20 weekday 9.895e-02
+## 6        25 weekday 1.590e+00
+## 7        30 weekday 6.927e-01
+## 8        35 weekday 1.138e+00
+## 9        40 weekday 0.000e+00
+## 10       45 weekday 1.796e+00
+## 11       50 weekday 3.958e-01
+## 12       55 weekday 1.761e-02
+## 13      100 weekday 4.205e-01
+## 14      105 weekday 9.057e-02
+## 15      110 weekday 1.979e-01
+## 16      115 weekday 4.453e-01
+## 17      120 weekday 0.000e+00
+## 18      125 weekday 1.460e+00
+## 19      130 weekday 2.222e+00
+## 20      135 weekday 2.264e-02
+## 21      140 weekday 2.226e-01
+## 22      145 weekday 2.503e-01
+## 23      150 weekday 3.463e-01
+## 24      155 weekday 0.000e+00
+## 25      200 weekday 0.000e+00
+## 26      205 weekday 0.000e+00
+## 27      210 weekday 1.395e+00
+## 28      215 weekday 0.000e+00
+## 29      220 weekday 0.000e+00
+## 30      225 weekday 1.732e-01
+## 31      230 weekday 0.000e+00
+## 32      235 weekday 2.969e-01
+## 33      240 weekday 0.000e+00
+## 34      245 weekday 0.000e+00
+## 35      250 weekday 2.029e+00
+## 36      255 weekday 1.237e+00
+## 37      300 weekday 0.000e+00
+## 38      305 weekday 0.000e+00
+## 39      310 weekday 0.000e+00
+## 40      315 weekday 0.000e+00
+## 41      320 weekday 2.767e-02
+## 42      325 weekday 8.164e-01
+## 43      330 weekday 1.239e+00
+## 44      335 weekday 5.224e-01
+## 45      340 weekday 4.210e-01
+## 46      345 weekday 9.895e-02
+## 47      350 weekday 0.000e+00
+## 48      355 weekday 0.000e+00
+## 49      400 weekday 2.696e-01
+## 50      405 weekday 1.237e+00
+## 51      410 weekday 2.231e+00
+## 52      415 weekday 0.000e+00
+## 53      420 weekday 4.453e-01
+## 54      425 weekday 4.780e-02
+## 55      430 weekday 3.371e+00
+## 56      435 weekday 2.214e-01
+## 57      440 weekday 3.777e+00
+## 58      445 weekday 8.885e-01
+## 59      450 weekday 2.348e+00
+## 60      455 weekday 7.262e-01
+## 61      500 weekday 0.000e+00
+## 62      505 weekday 2.053e+00
+## 63      510 weekday 3.933e+00
+## 64      515 weekday 2.188e+00
+## 65      520 weekday 4.221e+00
+## 66      525 weekday 2.706e+00
+## 67      530 weekday 2.746e+00
+## 68      535 weekday 7.941e+00
+## 69      540 weekday 2.040e+01
+## 70      545 weekday 2.365e+01
+## 71      550 weekday 5.035e+01
+## 72      555 weekday 5.627e+01
+## 73      600 weekday 4.129e+01
+## 74      605 weekday 6.459e+01
+## 75      610 weekday 7.008e+01
+## 76      615 weekday 7.715e+01
+## 77      620 weekday 6.393e+01
+## 78      625 weekday 6.003e+01
+## 79      630 weekday 6.644e+01
+## 80      635 weekday 4.798e+01
+## 81      640 weekday 5.567e+01
+## 82      645 weekday 5.487e+01
+## 83      650 weekday 4.705e+01
+## 84      655 weekday 6.043e+01
+## 85      700 weekday 5.060e+01
+## 86      705 weekday 5.083e+01
+## 87      710 weekday 6.202e+01
+## 88      715 weekday 6.933e+01
+## 89      720 weekday 6.310e+01
+## 90      725 weekday 5.911e+01
+## 91      730 weekday 6.622e+01
+## 92      735 weekday 5.435e+01
+## 93      740 weekday 6.272e+01
+## 94      745 weekday 8.338e+01
+## 95      750 weekday 6.774e+01
+## 96      755 weekday 6.658e+01
+## 97      800 weekday 8.272e+01
+## 98      805 weekday 7.196e+01
+## 99      810 weekday 1.440e+02
+## 100     815 weekday 1.820e+02
+## 101     820 weekday 2.006e+02
+## 102     825 weekday 1.836e+02
+## 103     830 weekday 1.989e+02
+## 104     835 weekday 2.304e+02
+## 105     840 weekday 2.189e+02
+## 106     845 weekday 1.857e+02
+## 107     850 weekday 1.912e+02
+## 108     855 weekday 1.771e+02
+## 109     900 weekday 1.677e+02
+## 110     905 weekday 1.258e+02
+## 111     910 weekday 9.395e+01
+## 112     915 weekday 8.730e+01
+## 113     920 weekday 1.035e+02
+## 114     925 weekday 9.246e+01
+## 115     930 weekday 5.852e+01
+## 116     935 weekday 3.585e+01
+## 117     940 weekday 2.746e+01
+## 118     945 weekday 4.086e+01
+## 119     950 weekday 3.913e+01
+## 120     955 weekday 1.763e+01
+## 121    1000 weekday 3.788e+01
+## 122    1005 weekday 1.822e+01
+## 123    1010 weekday 3.908e+01
+## 124    1015 weekday 4.782e+01
+## 125    1020 weekday 3.035e+01
+## 126    1025 weekday 3.515e+01
+## 127    1030 weekday 3.313e+01
+## 128    1035 weekday 2.426e+01
+## 129    1040 weekday 2.352e+01
+## 130    1045 weekday 2.591e+01
+## 131    1050 weekday 2.203e+01
+## 132    1055 weekday 2.326e+01
+## 133    1100 weekday 2.169e+01
+## 134    1105 weekday 2.509e+01
+## 135    1110 weekday 1.169e+01
+## 136    1115 weekday 1.627e+01
+## 137    1120 weekday 2.418e+01
+## 138    1125 weekday 2.373e+01
+## 139    1130 weekday 3.277e+01
+## 140    1135 weekday 5.020e+01
+## 141    1140 weekday 4.456e+01
+## 142    1145 weekday 4.792e+01
+## 143    1150 weekday 5.012e+01
+## 144    1155 weekday 5.614e+01
+## 145    1200 weekday 5.572e+01
+## 146    1205 weekday 7.285e+01
+## 147    1210 weekday 8.365e+01
+## 148    1215 weekday 7.528e+01
+## 149    1220 weekday 4.872e+01
+## 150    1225 weekday 4.682e+01
+## 151    1230 weekday 6.257e+01
+## 152    1235 weekday 3.074e+01
+## 153    1240 weekday 2.198e+01
+## 154    1245 weekday 2.932e+01
+## 155    1250 weekday 3.279e+01
+## 156    1255 weekday 5.659e+01
+## 157    1300 weekday 2.460e+01
+## 158    1305 weekday 2.574e+01
+## 159    1310 weekday 2.457e+01
+## 160    1315 weekday 1.564e+01
+## 161    1320 weekday 3.563e+01
+## 162    1325 weekday 4.486e+01
+## 163    1330 weekday 3.177e+01
+## 164    1335 weekday 2.331e+01
+## 165    1340 weekday 2.524e+01
+## 166    1345 weekday 4.018e+01
+## 167    1350 weekday 2.558e+01
+## 168    1355 weekday 3.633e+01
+## 169    1400 weekday 4.692e+01
+## 170    1405 weekday 3.955e+01
+## 171    1410 weekday 3.212e+01
+## 172    1415 weekday 4.505e+01
+## 173    1420 weekday 2.749e+01
+## 174    1425 weekday 3.076e+01
+## 175    1430 weekday 3.149e+01
+## 176    1435 weekday 1.451e+01
+## 177    1440 weekday 1.155e+01
+## 178    1445 weekday 2.199e+01
+## 179    1450 weekday 4.186e+01
+## 180    1455 weekday 3.828e+01
+## 181    1500 weekday 3.087e+01
+## 182    1505 weekday 3.505e+01
+## 183    1510 weekday 2.995e+01
+## 184    1515 weekday 3.191e+01
+## 185    1520 weekday 3.986e+01
+## 186    1525 weekday 3.735e+01
+## 187    1530 weekday 4.213e+01
+## 188    1535 weekday 5.093e+01
+## 189    1540 weekday 9.057e+01
+## 190    1545 weekday 9.587e+01
+## 191    1550 weekday 9.395e+01
+## 192    1555 weekday 7.031e+01
+## 193    1600 weekday 4.688e+01
+## 194    1605 weekday 4.520e+01
+## 195    1610 weekday 5.661e+01
+## 196    1615 weekday 3.613e+01
+## 197    1620 weekday 2.681e+01
+## 198    1625 weekday 2.953e+01
+## 199    1630 weekday 2.252e+01
+## 200    1635 weekday 2.183e+01
+## 201    1640 weekday 2.587e+01
+## 202    1645 weekday 3.199e+01
+## 203    1650 weekday 2.763e+01
+## 204    1655 weekday 3.242e+01
+## 205    1700 weekday 2.357e+01
+## 206    1705 weekday 4.495e+01
+## 207    1710 weekday 3.418e+01
+## 208    1715 weekday 4.807e+01
+## 209    1720 weekday 6.012e+01
+## 210    1725 weekday 7.237e+01
+## 211    1730 weekday 5.615e+01
+## 212    1735 weekday 6.582e+01
+## 213    1740 weekday 8.288e+01
+## 214    1745 weekday 5.933e+01
+## 215    1750 weekday 3.450e+01
+## 216    1755 weekday 3.759e+01
+## 217    1800 weekday 2.665e+01
+## 218    1805 weekday 4.662e+01
+## 219    1810 weekday 6.723e+01
+## 220    1815 weekday 8.264e+01
+## 221    1820 weekday 6.139e+01
+## 222    1825 weekday 7.346e+01
+## 223    1830 weekday 7.923e+01
+## 224    1835 weekday 8.150e+01
+## 225    1840 weekday 9.171e+01
+## 226    1845 weekday 1.155e+02
+## 227    1850 weekday 1.013e+02
+## 228    1855 weekday 9.059e+01
+## 229    1900 weekday 8.756e+01
+## 230    1905 weekday 7.722e+01
+## 231    1910 weekday 6.238e+01
+## 232    1915 weekday 5.438e+01
+## 233    1920 weekday 3.789e+01
+## 234    1925 weekday 2.056e+01
+## 235    1930 weekday 2.910e+01
+## 236    1935 weekday 4.598e+01
+## 237    1940 weekday 3.005e+01
+## 238    1945 weekday 1.858e+01
+## 239    1950 weekday 4.427e+01
+## 240    1955 weekday 2.729e+01
+## 241    2000 weekday 1.339e+01
+## 242    2005 weekday 5.558e+00
+## 243    2010 weekday 6.823e+00
+## 244    2015 weekday 1.411e+01
+## 245    2020 weekday 8.708e+00
+## 246    2025 weekday 5.712e+00
+## 247    2030 weekday 9.774e+00
+## 248    2035 weekday 7.156e+00
+## 249    2040 weekday 8.962e+00
+## 250    2045 weekday 1.311e+01
+## 251    2050 weekday 2.597e+01
+## 252    2055 weekday 1.731e+01
+## 253    2100 weekday 1.137e+01
+## 254    2105 weekday 1.890e+01
+## 255    2110 weekday 2.850e+01
+## 256    2115 weekday 1.894e+01
+## 257    2120 weekday 1.428e+01
+## 258    2125 weekday 8.047e+00
+## 259    2130 weekday 1.280e+01
+## 260    2135 weekday 1.651e+01
+## 261    2140 weekday 7.135e+00
+## 262    2145 weekday 7.595e+00
+## 263    2150 weekday 8.262e+00
+## 264    2155 weekday 3.439e+00
+## 265    2200 weekday 1.527e+00
+## 266    2205 weekday 4.424e+00
+## 267    2210 weekday 6.308e+00
+## 268    2215 weekday 1.116e+01
+## 269    2220 weekday 9.277e+00
+## 270    2225 weekday 1.085e+01
+## 271    2230 weekday 1.279e+01
+## 272    2235 weekday 2.894e+00
+## 273    2240 weekday 4.277e-02
+## 274    2245 weekday 1.484e-01
+## 275    2250 weekday 1.903e+00
+## 276    2255 weekday 2.014e+00
+## 277    2300 weekday 3.551e+00
+## 278    2305 weekday 3.735e+00
+## 279    2310 weekday 0.000e+00
+## 280    2315 weekday 1.088e+00
+## 281    2320 weekday 1.262e+00
+## 282    2325 weekday 1.878e+00
+## 283    2330 weekday 3.036e+00
+## 284    2335 weekday 2.249e+00
+## 285    2340 weekday 2.240e+00
+## 286    2345 weekday 2.633e-01
+## 287    2350 weekday 2.969e-01
+## 288    2355 weekday 1.410e+00
+## 289       0 weekend 2.146e-01
+## 290       5 weekend 4.245e-02
+## 291      10 weekend 1.651e-02
+## 292      15 weekend 1.887e-02
+## 293      20 weekend 9.434e-03
+## 294      25 weekend 3.512e+00
+## 295      30 weekend 6.604e-02
+## 296      35 weekend 1.085e-01
+## 297      40 weekend 0.000e+00
+## 298      45 weekend 5.590e-01
+## 299      50 weekend 3.774e-02
+## 300      55 weekend 4.540e-01
+## 301     100 weekend 4.009e-02
+## 302     105 weekend 2.335e+00
+## 303     110 weekend 1.887e-02
+## 304     115 weekend 4.245e-02
+## 305     120 weekend 0.000e+00
+## 306     125 weekend 1.392e-01
+## 307     130 weekend 7.288e-01
+## 308     135 weekend 5.837e-01
+## 309     140 weekend 2.123e-02
+## 310     145 weekend 7.347e-01
+## 311     150 weekend 3.302e-02
+## 312     155 weekend 0.000e+00
+## 313     200 weekend 0.000e+00
+## 314     205 weekend 0.000e+00
+## 315     210 weekend 3.915e-01
+## 316     215 weekend 0.000e+00
+## 317     220 weekend 0.000e+00
+## 318     225 weekend 1.651e-02
+## 319     230 weekend 0.000e+00
+## 320     235 weekend 2.830e-02
+## 321     240 weekend 0.000e+00
+## 322     245 weekend 0.000e+00
+## 323     250 weekend 1.934e-01
+## 324     255 weekend 1.179e-01
+## 325     300 weekend 0.000e+00
+## 326     305 weekend 0.000e+00
+## 327     310 weekend 0.000e+00
+## 328     315 weekend 0.000e+00
+## 329     320 weekend 7.134e-01
+## 330     325 weekend 7.783e-02
+## 331     330 weekend 2.703e+00
+## 332     335 weekend 7.606e-01
+## 333     340 weekend 6.863e-01
+## 334     345 weekend 9.434e-03
+## 335     350 weekend 0.000e+00
+## 336     355 weekend 0.000e+00
+## 337     400 weekend 3.774e+00
+## 338     405 weekend 1.179e-01
+## 339     410 weekend 3.508e+00
+## 340     415 weekend 0.000e+00
+## 341     420 weekend 4.245e-02
+## 342     425 weekend 1.232e+00
+## 343     430 weekend 6.202e+00
+## 344     435 weekend 1.895e+00
+## 345     440 weekend 2.686e+00
+## 346     445 weekend 6.663e-01
+## 347     450 weekend 5.264e+00
+## 348     455 weekend 2.202e+00
+## 349     500 weekend 0.000e+00
+## 350     505 weekend 1.958e-01
+## 351     510 weekend 3.750e-01
+## 352     515 weekend 2.406e+00
+## 353     520 weekend 7.901e-01
+## 354     525 weekend 3.683e+00
+## 355     530 weekend 2.618e-01
+## 356     535 weekend 7.571e-01
+## 357     540 weekend 3.690e+00
+## 358     545 weekend 3.417e+00
+## 359     550 weekend 8.807e+00
+## 360     555 weekend 1.137e+01
+## 361     600 weekend 3.936e+00
+## 362     605 weekend 6.158e+00
+## 363     610 weekend 7.909e+00
+## 364     615 weekend 2.493e+01
+## 365     620 weekend 1.068e+01
+## 366     625 weekend 1.063e+01
+## 367     630 weekend 1.196e+01
+## 368     635 weekend 1.504e+01
+## 369     640 weekend 1.125e+01
+## 370     645 weekend 1.408e+01
+## 371     650 weekend 1.011e+01
+## 372     655 weekend 1.700e+01
+## 373     700 weekend 2.473e+01
+## 374     705 weekend 2.623e+01
+## 375     710 weekend 1.813e+01
+## 376     715 weekend 1.281e+01
+## 377     720 weekend 1.287e+01
+## 378     725 weekend 2.812e+01
+## 379     730 weekend 2.602e+01
+## 380     735 weekend 1.610e+01
+## 381     740 weekend 2.285e+01
+## 382     745 weekend 3.063e+01
+## 383     750 weekend 3.004e+01
+## 384     755 weekend 2.683e+01
+## 385     800 weekend 4.711e+01
+## 386     805 weekend 5.765e+01
+## 387     810 weekend 8.843e+01
+## 388     815 weekend 8.875e+01
+## 389     820 weekend 8.839e+01
+## 390     825 weekend 7.605e+01
+## 391     830 weekend 1.166e+02
+## 392     835 weekend 1.381e+02
+## 393     840 weekend 1.313e+02
+## 394     845 weekend 1.624e+02
+## 395     850 weekend 1.614e+02
+## 396     855 weekend 1.387e+02
+## 397     900 weekend 7.537e+01
+## 398     905 weekend 1.191e+02
+## 399     910 weekend 1.518e+02
+## 400     915 weekend 1.666e+02
+## 401     920 weekend 1.042e+02
+## 402     925 weekend 1.058e+02
+## 403     930 weekend 8.784e+01
+## 404     935 weekend 7.159e+01
+## 405     940 weekend 1.729e+01
+## 406     945 weekend 3.284e+01
+## 407     950 weekend 2.331e+01
+## 408     955 weekend 3.069e+01
+## 409    1000 weekend 4.813e+01
+## 410    1005 weekend 5.162e+01
+## 411    1010 weekend 5.180e+01
+## 412    1015 weekend 6.627e+01
+## 413    1020 weekend 6.305e+01
+## 414    1025 weekend 9.479e+01
+## 415    1030 weekend 7.566e+01
+## 416    1035 weekend 7.443e+01
+## 417    1040 weekend 6.615e+01
+## 418    1045 weekend 3.517e+01
+## 419    1050 weekend 3.370e+01
+## 420    1055 weekend 5.637e+01
+## 421    1100 weekend 5.854e+01
+## 422    1105 weekend 4.258e+01
+## 423    1110 weekend 4.842e+01
+## 424    1115 weekend 5.163e+01
+## 425    1120 weekend 4.017e+01
+## 426    1125 weekend 3.418e+01
+## 427    1130 weekend 3.530e+01
+## 428    1135 weekend 4.937e+01
+## 429    1140 weekend 3.494e+01
+## 430    1145 weekend 3.526e+01
+## 431    1150 weekend 3.457e+01
+## 432    1155 weekend 6.777e+01
+## 433    1200 weekend 8.680e+01
+## 434    1205 weekend 1.295e+02
+## 435    1210 weekend 1.264e+02
+## 436    1215 weekend 1.420e+02
+## 437    1220 weekend 1.047e+02
+## 438    1225 weekend 5.958e+01
+## 439    1230 weekend 3.168e+01
+## 440    1235 weekend 3.711e+01
+## 441    1240 weekend 3.932e+01
+## 442    1245 weekend 6.140e+01
+## 443    1250 weekend 7.957e+01
+## 444    1255 weekend 9.735e+01
+## 445    1300 weekend 9.223e+01
+## 446    1305 weekend 7.967e+01
+## 447    1310 weekend 9.585e+01
+## 448    1315 weekend 1.122e+02
+## 449    1320 weekend 7.609e+01
+## 450    1325 weekend 8.899e+01
+## 451    1330 weekend 7.366e+01
+## 452    1335 weekend 3.027e+01
+## 453    1340 weekend 8.137e+01
+## 454    1345 weekend 9.113e+01
+## 455    1350 weekend 1.085e+02
+## 456    1355 weekend 1.297e+02
+## 457    1400 weekend 8.059e+01
+## 458    1405 weekend 8.687e+01
+## 459    1410 weekend 7.582e+01
+## 460    1415 weekend 5.896e+01
+## 461    1420 weekend 5.793e+01
+## 462    1425 weekend 5.663e+01
+## 463    1430 weekend 7.098e+01
+## 464    1435 weekend 6.406e+01
+## 465    1440 weekend 3.276e+01
+## 466    1445 weekend 3.757e+01
+## 467    1450 weekend 4.858e+01
+## 468    1455 weekend 5.922e+01
+## 469    1500 weekend 2.763e+01
+## 470    1505 weekend 3.895e+01
+## 471    1510 weekend 5.106e+01
+## 472    1515 weekend 5.836e+01
+## 473    1520 weekend 6.312e+01
+## 474    1525 weekend 7.703e+01
+## 475    1530 weekend 6.502e+01
+## 476    1535 weekend 1.058e+02
+## 477    1540 weekend 6.136e+01
+## 478    1545 weekend 1.065e+02
+## 479    1550 weekend 1.251e+02
+## 480    1555 weekend 1.224e+02
+## 481    1600 weekend 1.050e+02
+## 482    1605 weekend 1.174e+02
+## 483    1610 weekend 1.250e+02
+## 484    1615 weekend 1.392e+02
+## 485    1620 weekend 1.416e+02
+## 486    1625 weekend 1.448e+02
+## 487    1630 weekend 1.039e+02
+## 488    1635 weekend 8.563e+01
+## 489    1640 weekend 9.752e+01
+## 490    1645 weekend 8.331e+01
+## 491    1650 weekend 9.846e+01
+## 492    1655 weekend 7.533e+01
+## 493    1700 weekend 1.115e+02
+## 494    1705 weekend 8.823e+01
+## 495    1710 weekend 9.721e+01
+## 496    1715 weekend 9.822e+01
+## 497    1720 weekend 1.082e+02
+## 498    1725 weekend 9.743e+01
+## 499    1730 weekend 1.049e+02
+## 500    1735 weekend 4.233e+01
+## 501    1740 weekend 5.320e+01
+## 502    1745 weekend 4.856e+01
+## 503    1750 weekend 3.553e+01
+## 504    1755 weekend 3.706e+01
+## 505    1800 weekend 8.015e+01
+## 506    1805 weekend 9.006e+01
+## 507    1810 weekend 9.571e+01
+## 508    1815 weekend 9.285e+01
+## 509    1820 weekend 5.328e+01
+## 510    1825 weekend 5.178e+01
+## 511    1830 weekend 7.340e+01
+## 512    1835 weekend 5.384e+01
+## 513    1840 weekend 6.742e+01
+## 514    1845 weekend 5.443e+01
+## 515    1850 weekend 4.520e+01
+## 516    1855 weekend 7.158e+01
+## 517    1900 weekend 7.730e+01
+## 518    1905 weekend 7.954e+01
+## 519    1910 weekend 4.582e+01
+## 520    1915 weekend 5.048e+01
+## 521    1920 weekend 3.192e+01
+## 522    1925 weekend 2.115e+01
+## 523    1930 weekend 2.261e+01
+## 524    1935 weekend 2.325e+01
+## 525    1940 weekend 3.065e+01
+## 526    1945 weekend 4.513e+01
+## 527    1950 weekend 4.958e+01
+## 528    1955 weekend 5.107e+01
+## 529    2000 weekend 3.714e+01
+## 530    2005 weekend 5.688e+01
+## 531    2010 weekend 5.454e+01
+## 532    2015 weekend 8.742e+01
+## 533    2020 weekend 7.773e+01
+## 534    2025 weekend 6.465e+01
+## 535    2030 weekend 7.660e+01
+## 536    2035 weekend 6.123e+01
+## 537    2040 weekend 4.932e+01
+## 538    2045 weekend 4.442e+01
+## 539    2050 weekend 5.010e+01
+## 540    2055 weekend 2.814e+01
+## 541    2100 weekend 2.881e+01
+## 542    2105 weekend 1.253e+01
+## 543    2110 weekend 9.244e+00
+## 544    2115 weekend 2.009e+01
+## 545    2120 weekend 7.307e+00
+## 546    2125 weekend 7.940e+00
+## 547    2130 weekend 1.990e+01
+## 548    2135 weekend 1.573e+01
+## 549    2140 weekend 1.302e+01
+## 550    2145 weekend 8.349e+00
+## 551    2150 weekend 7.767e+00
+## 552    2155 weekend 3.278e-01
+## 553    2200 weekend 1.244e+00
+## 554    2205 weekend 1.585e+00
+## 555    2210 weekend 6.014e-01
+## 556    2215 weekend 1.064e+00
+## 557    2220 weekend 8.844e-01
+## 558    2225 weekend 2.650e+00
+## 559    2230 weekend 1.219e+00
+## 560    2235 weekend 2.759e-01
+## 561    2240 weekend 1.103e+00
+## 562    2245 weekend 1.415e-02
+## 563    2250 weekend 7.630e-01
+## 564    2255 weekend 1.189e+01
+## 565    2300 weekend 2.600e+00
+## 566    2305 weekend 3.561e-01
+## 567    2310 weekend 0.000e+00
+## 568    2315 weekend 1.038e-01
+## 569    2320 weekend 1.203e-01
+## 570    2325 weekend 7.606e-01
+## 571    2330 weekend 1.388e+00
+## 572    2335 weekend 1.159e+01
+## 573    2340 weekend 6.288e+00
+## 574    2345 weekend 1.705e+00
+## 575    2350 weekend 2.830e-02
+## 576    2355 weekend 1.344e-01
+</code></pre>
+
+<p>Now create the plot:</p>
+
+<pre><code class="r">ggplot(ActivityPatternClone, aes(x=Group.1, y=x)) + geom_line() + facet_grid( Group.2 ~ .) + labs(y=&quot;average number of steps per interval&quot;) + labs(x=&quot;interval&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk compare weekdays and weekends"/> </p>
+
+<h2>Step 7: Commiting the finished Markdown-file first to your local repository, then to your forked online-repository at &#39;github.com&#39; and submit a link to the forked online-repository as well as the SHA-1 hash for this repository to the course page on the coursera website.</h2>
+
+<p>As with Step 1, this is neither an R nor a Markdown task, so the specifics on <em>HOW</em> to do this will not be presented here (the instructions to the assignment also do not require this description).</p>
+
+<p>.</p>
+
+</body>
+
+</html>
+
