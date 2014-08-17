@@ -1,20 +1,196 @@
-# Reproducible Research: Peer Assessment 1
+Reproducible Research: Programming Assignment 1
+========================================================
+
+```{r prepare packages, echo=FALSE, message=FALSE, warning=FALSE}
+require(ggplot2) 
+```
+
+This is a submit to the first programming assigment MOOC **'Reproducible Research'**
+from August 2014, offered by Coursera in Cooperation with the John Hopkins
+Bloomberg School of Public Health.
+
+The objective of the assignemnt is to analyze a dataset collected by one anonymous person using a personal activity monitoring device like 'Nike Fuelband' or similar. The dataset is comprised of measurements of three variables. Each measurement represents a five minute time intervall during the months of October and November 2012. The **three variables** are: **'STEPS'** (number of steps the person has taken in the measured five minute intervall), **'DATE'** (date that that the measurement was done) and RVALL'* (identifier for the five minute intervall of a measurement)
+
+The dataset was provided by the staff of the John Hopkins Bloomberg School for Public Health and was contained in a file named **'repdata_data_activity.zip'** which includes a single file named **'activity.csv'**. The zip-file is contained in the github-repository **'http://github.com/rdpeng/RepData_PeerAssessment1'** that the course instructors created for the purpose of this programming assignment.
+
+The following reproducible analysis will be conducted according to the instructions for the programming assignment, as stated on the Coursera website in the data for the 'Reproducible Research' course. It will contain the following **7 steps**, all of which will be addresses in this Markdown-file:
+
+*Note: Running the analysis file requires having the 'knitr'- and 'ggplot2'-packages installed.*
+
+1. Forking the github repository 'http://github.com/rdpeng/RepData_PeerAssessment1' and cloning it to a local copy
+
+2. Loading and pre-processing the dataset from the .csv-file
+
+3. Calculating the mean total number of steps taken per day and plotting a histogram of the calculated results
+
+4. Analysing and plotting the average daily activitiy pattern and identifying the five minute intervall that, on average of all days in the dataset, contains the maximum number of steps.
+
+5. Imputing missing values (which are labeled 'NA') and redo step 5, including the imputed data. This step includes four sub-steps which will be explained later in this file.
+
+6. Analyzing, if there are any differences in activity patterns between weekdays and weekends.
+
+7. Commiting the finished Markdown-file first to your local repository, then to your forked online-repository at 'github.com' and submit a link to the forked online-repository as well as the SHA-1 hash for this repository to the course page on the coursera website.
 
 
-## Loading and preprocessing the data
+## Step 1: Forking the github repository 'http://github.com/rdpeng/RepData_PeerAssessment1' and cloning it to a local copy:
+
+This is neither an R nor a Markdown task, so the specifics on *HOW* to do this will not be presented here (the instructions to the assignment also do not require a description)
+
+Please note, that I assume that you UNZIP the zipped date file in your local repository before you run this analysis Markdown file.
+
+## Step 2: Loading and pre-processing the dataset from the .csv-file:
+
+Load the data file in a dataframe called 'data':
+```{r load data file, echo=TRUE}
+data<-read.csv("activity.csv")
+```
+
+Take a look at the data:
+```{r summarize data, echo=TRUE}
+str(data)
+```
+
+As I am working on a computer whose system language is not english, I have to tell knitr to use english, by using the following code (I also add a 'weekday' columnn to the data, which will be needed later on):
+
+```{r change language, echo=TRUE}
+Sys.setlocale("LC_TIME", "English") 
+date = strptime(as.character(data[,2]), "%Y-%m-%d") 
+wday = weekdays(date) 
+steps = data[,1] 
+interval = data[,3] 
+data = data.frame(date, wday, steps, interval)
+```
+
+Let's have another look:
+```{r summarize data 2, echo=TRUE}
+str(data)
+```
+
+
+## Step 3: Calculating the mean total number of steps taken per day and plotting a histogram of the calculated results:
+
+Calculate the sum of taken steps for each day in the observed time period of two months:
+
+```{r calculate sum, ECHO=TRUE}
+histogram_data<-as.data.frame(tapply(data$steps,data$date,sum))
+names(histogram_data)<-"steps_taken"
+histogram_data
+```
+
+And plot a histogram of the total number of steps taken per day:
+
+```{r plot histogram of steps per day, ECHO=TRUE, fig.height=4}
+plot<-ggplot(histogram_data, aes(x=steps_taken))
+plot<- plot + geom_histogram(binwidth=500) + labs(y="number of days") + labs(x="steps taken per day")
+print(plot)
+```
+
+Now calculate the mean of total steps taken per day:
+```{r mean steps per day, ECHO=TRUE}
+mean(histogram_data[,1], na.rm=TRUE)
+```
+
+And the median of total steps taken per day:
+```{r median steps per day, ECHO=TRUE}
+median(histogram_data[,1], na.rm=TRUE)
+```
+
+## Step 4: Analysing and plotting the average daily activitiy pattern and identifying the five minute intervall that, on average of all days in the dataset, contains the maximum number of steps:
+
+First, calculate the average number of steps taken (averaged across all days) to create the daily activity pattern:
+
+```{r activity pattern, ECHO=TRUE}
+ActivityPattern<-aggregate(steps ~ interval, data, mean)
+ActivityPattern
+```
+
+Now create the plot:
+```{r plot activity pattern, ECHO=TRUE, fig.height=4}
+plotActivityPattern<-ggplot(ActivityPattern,aes(interval,steps)) + geom_line() + ylab("average steps") + xlab("interval")
+print(plotActivityPattern)
+```
+
+And find out, which interval has the highest average number of steps taken:
+```{r max average step interval, echo=TRUE}
+ActivityPattern$interval[which.max(ActivityPattern$steps)]
+```
+And show the average number of steps for this intervall:
+```{r max average steps, echo=TRUE}
+max(ActivityPattern$steps)
+```
+
+
+## Step 5: Imputing missing values (which are labeled 'NA') and redo step 3, including the imputed data. 
+
+Let's see, how many values of the 'steps' variable are missing in the dataset:
+```{r count missings} 
+missings = is.na(steps) 
+sum(missings) 
+``` 
+
+Now create a clone of the original dataset and impute the missing values with the mean value for the corresponding interval:
+```{r imputed_values} 
+dataClone <- data
+fn <- function(steps,interval) ifelse(is.na(steps),ActivityPattern$steps[ActivityPattern$interval==interval],steps) 
+dataClone$steps <- apply( data[,c('steps','interval')] ,1, function(y) fn(y['steps'],y['interval']) ) 
+``` 
+
+Now, with the cloned and imputed dataset, calculate again the sum of taken steps for each day in the observed time period of two months:
+
+```{r calculate sum for clone, ECHO=TRUE}
+histogram_data<-as.data.frame(tapply(dataClone$steps,dataClone$date,sum))
+names(histogram_data)<-"steps_taken"
+histogram_data
+```
+
+And plot a histogram of the total number of steps taken per day:
+
+```{r plot histogram of steps per day for clone, ECHO=TRUE, fig.height=4}
+plot<-ggplot(histogram_data, aes(x=steps_taken))
+plot<- plot + geom_histogram(binwidth=500) + labs(y="number of days") + labs(x="steps taken per day")
+print(plot)
+```
+
+Now calculate the mean of total steps taken per day:
+```{r mean steps per day for clone, ECHO=TRUE}
+mean(histogram_data[,1], na.rm=TRUE)
+```
+
+And the median of total steps taken per day:
+```{r median steps per day for clone, ECHO=TRUE}
+median(histogram_data[,1], na.rm=TRUE)
+```
+
+
+## Step 6: Analyzing, if there are any differences in activity patterns between weekdays and weekends.
+
+First, add a new factor variable to the cloned and imputed dataset, to differentiate between weekdays and weekends:
+
+```{r mark weekends, echo=TRUE}
+FUN <- function(d) ifelse(is.na(match(weekdays(d),c("Saturday","Sunday"))),"weekday","weekend")
+dataClone$weekendYN <- factor(apply(dataClone[c('date')],1,function(y) FUN(as.Date(y['date']))))
+str(dataClone)
+```
+
+Then create a plot to see, if the average activity patterns for a timeline of intervals differ between weekdays and weekends:
+
+
+```{r activity pattern weekdays weekends, ECHO=TRUE}
+ActivityPatternClone<-aggregate(dataClone$steps, list(dataClone$interval,dataClone$weekendYN), mean)
+ActivityPatternClone
+```
+
+Now create the plot:
+```{r compare weekdays and weekends, echo=TRUE}
+ggplot(ActivityPatternClone, aes(x=Group.1, y=x)) + geom_line() + facet_grid( Group.2 ~ .) + labs(y="average number of steps per interval") + labs(x="interval")
+```
 
 
 
-## What is mean total number of steps taken per day?
+## Step 7: Commiting the finished Markdown-file first to your local repository, then to your forked online-repository at 'github.com' and submit a link to the forked online-repository as well as the SHA-1 hash for this repository to the course page on the coursera website.
+
+As with Step 1, this is neither an R nor a Markdown task, so the specifics on *HOW* to do this will not be presented here (the instructions to the assignment also do not require this description).
 
 
 
-## What is the average daily activity pattern?
-
-
-
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
+.
