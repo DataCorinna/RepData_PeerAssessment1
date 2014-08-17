@@ -1,4 +1,4 @@
-Reproducible Research: Programming Assignment 1
+Reproducible Research: Programming Assignment 1 
 ========================================================
 
 
